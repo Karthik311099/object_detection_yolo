@@ -1,5 +1,21 @@
 # object_detection_yolo
 
+
+## Workflows
+
+- constants
+- entity
+    1. config_entity
+    2. artifact_entity #return path of data
+- components 
+    1. data_ingestion
+    2. data_validation
+    3. model-pusher
+    4.model_trainer
+- pipeline
+- app.py
+
+
 ## How to run:
 
 ```bash

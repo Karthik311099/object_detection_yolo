@@ -1,9 +1,8 @@
 from signLanguage.logger import logging
 from signLanguage.exception import SignException
 import sys
+ 
+from signLanguage.pipeline.training_pipeline import TrainPipeline
 
-import torch
-if torch.cuda.is_available():
-    print('yes')
-else:
-    print('no')
+obj=TrainPipeline()
+obj.run_pipeline()
