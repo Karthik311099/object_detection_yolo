@@ -33,9 +33,9 @@ MODEL_TRAINER_DIR_NAME: str = "model_trainer"
 
 MODEL_TRAINER_PRETRAINED_WEIGHT_NAME: str = "yolov5s.pt"
 
-MODEL_TRAINER_NO_EPOCHS: int = 1
+MODEL_TRAINER_NO_EPOCHS: int = 1 #based on your gpu
 
-MODEL_TRAINER_BATCH_SIZE: int = 16
+MODEL_TRAINER_BATCH_SIZE: int = 16 #based on your ram
 
 
 
