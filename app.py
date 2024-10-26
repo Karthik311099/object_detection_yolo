@@ -4,6 +4,7 @@ from signLanguage.exception import SignException
 from signLanguage.utils.main_utils import decodeImage, encodeImageIntoBase64
 from flask import Flask, request, jsonify, render_template,Response
 from flask_cors import CORS, cross_origin
+import subprocess, shutil
 
 
 app = Flask(__name__)
@@ -38,11 +39,17 @@ def predictRoute():
         image = request.json['image']
         decodeImage(image, clApp.filename)
 
-        os.system("cd yolov5/ && python detect.py --weights best.pt --img 416 --conf 0.5 --source ../data/inputImage.jpg")
+        # os.system("cd yolov5/ && python detect.py --weights mymodel.pt --img 416 --conf 0.5 --source ../data/inputImage.jpg")
+        subprocess.run(
+                        "python detect.py --weights best.pt --img 416 --conf 0.5 --source ../data/inputImage.jpg",
+                        cwd="yolov5",
+                        shell=True
+                    )
 
         opencodedbase64 = encodeImageIntoBase64("yolov5/runs/detect/exp/inputImage.jpg")
         result = {"image": opencodedbase64.decode('utf-8')}
-        os.system("rm -rf yolov5/runs")
+        # os.system("rm -rf yolov5/runs")
+        shutil.rmtree("yolov5/runs", ignore_errors=True)
 
     except ValueError as val:
         print(val)
@@ -62,8 +69,11 @@ def predictRoute():
 @cross_origin()
 def predictLive():
     try:
-        os.system("cd yolov5/ && python detect.py --weights my_model.pt --img 416 --conf 0.5 --source 0")
-        os.system("rm -rf yolov5/runs")
+        # os.system("cd yolov5/ && python detect.py --weights my_model.pt --img 416 --conf 0.5 --source 0")
+        subprocess.run("cd yolov5 && python detect.py --weights my_model.pt --img 416 --conf 0.5 --source 0", shell=True)
+
+        # os.system("rm -rf yolov5/runs")
+        subprocess.run("rm -rf yolov5/runs", shell=True)
         return "Camera starting!!" 
 
     except ValueError as val:
